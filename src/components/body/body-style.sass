@@ -1,0 +1,61 @@
+@import "../../variables"
+
+.body
+  flex-grow: 1
+  background-color: $dark
+  display: flex
+  flex-direction: column
+
+  .filtering
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding: 20px 0
+    border-bottom: 2px solid rgba($white, .4)
+
+  .select-category
+    input
+      display: none
+
+    span
+      color: $white
+      font-weight: 300
+      text-transform: uppercase
+      margin-right: 15px
+      cursor: pointer
+      opacity: .8
+      transition: .3s
+
+      &:hover
+        opacity: 1
+
+  .sort-by
+    display: flex
+
+    &_title
+      color: rgba($white, .8)
+      font-weight: 300
+      text-transform: uppercase
+      margin-right: 20px
+
+    select
+      background: none
+      border: none
+      color: $white
+      font-weight: 300
+      text-transform: uppercase
+      font-size: 16px
+      cursor: pointer
+
+      option
+        color: $dark
+  .movie-list
+    flex-grow: 1
+    display: flex
+    .not-found
+      margin: auto
+      text-align: center
+      font-weight: 300
+      font-size: 48px
+      color: $white
+

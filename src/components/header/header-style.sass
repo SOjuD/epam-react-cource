@@ -1,0 +1,77 @@
+@import '../../variables'
+
+.mainHeader
+  min-height: 400px
+  background-size: cover
+  background-position: center
+
+  .top-line
+    width: 100%
+    display: flex
+    justify-content: space-between
+    padding: 20px 40px
+
+    .logo
+      height: 30px
+
+      img
+        height: 100%
+
+    .add-movie
+      border-radius: 4px
+      background: rgba($white, .3)
+      color: $red
+      width: 200px
+      height: 50px
+      border: none
+      font-size: 20px
+      text-transform: uppercase
+      font-weight: 600
+      cursor: pointer
+
+  .find-movie
+    width: 90%
+    margin: 0 auto
+    display: flex
+    flex-wrap: wrap
+
+    h4
+      width: 100%
+      color: $white
+      font-weight: 300
+      font-size: 42px
+      margin: 0 0 30px
+      text-transform: uppercase
+
+    input
+      display: block
+      flex-grow: 1
+      margin-right: 10px
+      background: rgba($white, .15)
+      padding: 12px
+      color: $white
+      border-radius: 4px
+      border: 2px solid transparent
+      transition: .3s
+      font-size: 18px
+
+      &:focus
+        outline: none
+        border-color: rgba($white, .6)
+
+    ::placeholder
+      color: $white
+      font-size: 16px
+      font-weight: 300
+
+    button
+      width: 200px
+      background: $red
+      color: $white
+      font-size: 18px
+      border: none
+      border-radius: 4px
+      cursor: pointer
+
+
+
