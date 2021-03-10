@@ -6,6 +6,7 @@ import {Footer} from "@/components/footer";
 import './app-style.sass';
 
 export const App = () => {
+
     return (
         <React.Fragment>
             <Header />

@@ -1,3 +1,6 @@
 export const initialState = {
-    films: []
+    movieData: {
+        isLoaded: false,
+        data: []
+    }
 };
