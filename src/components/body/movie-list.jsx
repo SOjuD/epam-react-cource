@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
-import {Spinner} from '@/components/spinner';
+import Spinner from '@/components/spinner';
 import {NotFound} from "@/components/body/not-found";
 import {MovieListItem} from "@/components/body/movie-list-item";
 import {api} from "@/api";

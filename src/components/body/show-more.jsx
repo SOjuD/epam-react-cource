@@ -10,7 +10,7 @@ export const ShowMore = () => {
 
     const getMoreMovies = () => {
         dispatch(startLoading())
-        api.getMovies(offset + limit).then(res => {
+        api.getMovies(offset + api.defaultMovieListLength).then(res => {
             dispatch(moviesLoaded(res))
         })
     }
