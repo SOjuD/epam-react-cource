@@ -3,5 +3,8 @@ export const initialState = {
         isLoaded: false,
         data: []
     },
-    isShowAddMovie: false
+    modals:{
+        addMovieModal: false,
+        deleteModal: false
+    }
 };

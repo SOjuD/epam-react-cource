@@ -1,6 +1,6 @@
 @import "../../variables"
 
-.add-movie
+.modal
   position: fixed
   left: 0
   top: 0
@@ -10,7 +10,7 @@
   z-index: 10
   display: flex
 
-  form
+  .add-movie-form
     width: 100%
     max-width: 600px
     display: flex
@@ -86,21 +86,21 @@
       display: flex
       justify-content: flex-end
 
-    button
-      width: 150px
-      height: 40px
-      text-align: center
-      font-size: 18px
-      border-radius: 4px
-      cursor: pointer
+  button
+    width: 150px
+    height: 40px
+    text-align: center
+    font-size: 18px
+    border-radius: 4px
+    cursor: pointer
 
-    [type='reset']
-      border: 1px solid $red
-      background: none
-      color: $red
-      margin-right: 10px
+  [type='reset']
+    border: 1px solid $red
+    background: none
+    color: $red
+    margin-right: 10px
 
-    [type='submit']
-      border: none
-      background: $red
-      color: $white
+  [type='submit']
+    border: none
+    background: $red
+    color: $white

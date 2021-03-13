@@ -14,7 +14,7 @@ export const movieRemoved = (id) => ({
     payload: id
 })
 
-export const toggleAddMovie = (flag) => ({
-    type: types.TOGGLE_ADD_MOVIE,
-    payload: flag
+export const toggleModal = (modal, state) => ({
+    type: types.TOGGLE_MODAL,
+    payload: {modal, state}
 })

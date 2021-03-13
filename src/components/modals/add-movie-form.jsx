@@ -1,16 +1,16 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import {toggleAddMovie} from "@/store/actions";
+import {toggleModal} from "@/store/actions";
 
 export const AddMovieForm = () => {
     const dispatch = useDispatch();
-    const hideAddMovie = () => dispatch(toggleAddMovie(false));
+    const hideAddMovie = () => dispatch(toggleModal('addMovieModal',false));
     const addMovie = (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
     }
     return (
-        <form onSubmit={addMovie}>
+        <form onSubmit={addMovie} className="add-movie-form">
             <div className="close" onClick={hideAddMovie}>✖</div>
             <h4>Add Movie</h4>
             <label>

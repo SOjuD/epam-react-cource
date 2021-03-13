@@ -3,16 +3,16 @@ import {useSelector} from "react-redux";
 import {Header} from "@/components/header";
 import {Body} from "@/components/body";
 import {Footer} from "@/components/footer";
-import {AddMovie} from "@/components/add-movie-block";
+import {Modal} from "@/components/modals";
 
 import './app-style.sass';
 
 export const App = () => {
-    const isShowAddMovie = useSelector(state => state.isShowAddMovie);
+    const isShowModal = useSelector(state => Object.values(state.modals).some(el => el === true));
 
     return (
         <React.Fragment>
-            {isShowAddMovie && <AddMovie/>}
+            {isShowModal && <Modal/>}
             <Header />
             <Body />
             <Footer />

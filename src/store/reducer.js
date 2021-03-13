@@ -30,11 +30,10 @@ const reducer = (state = initialState, action) => {
                     data: [...state.movieData.data.slice(0, index), ...state.movieData.data.slice(index + 1, state.movieData.data.length)]
                 }
             }
-        case(types.TOGGLE_ADD_MOVIE) :
-            return {
-                ...state,
-                isShowAddMovie: action.payload
-            }
+        case(types.TOGGLE_MODAL) :
+            const newState =  {...state};
+            newState.modals[action.payload.modal] = action.payload.state;
+            return newState;
         default :
             return state;
     }

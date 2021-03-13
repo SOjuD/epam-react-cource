@@ -2,8 +2,6 @@ import React, {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import defaultImage from '@/assets/img/default.jpg';
-import {api} from "@/api";
-import {movieRemoved, moviesLoaded} from "@/store/actions";
 
 const Options = ({deleteMovie}) => {
     return(<ul className="movie-list_item_options">
@@ -13,46 +11,27 @@ const Options = ({deleteMovie}) => {
 }
 
 const MovieListItem = ({movie}) => {
-    const [imagePath, setImagePath] = useState(movie['poster_path']);
+    const [imagePath, setImagePath] = useState(movie.poster_path);
     const [isShowOptions, toggleIsShowOptions] = useState(false);
-    const {offset, limit} = useSelector(state => state.movieData);
-    const dispatch = useDispatch();
     const toggleOptions = () => toggleIsShowOptions(!isShowOptions);
     const changeToDefaultImage = () =>{
         setImagePath(defaultImage);
     }
     const getMovieYear = () => {
         const separator = '-';
-        const index = movie['release_date'].indexOf(separator);
-        return movie['release_date'].slice(0, index)
+        const index = movie.release_date.indexOf(separator);
+        return movie.release_date.slice(0, index)
     }
-    const getGenres = () => movie['genres'].join(', ');
-    const deleteMovie = () =>{
-        api.deleteMovie(movie['id']).then(res => {
-            if(res === 204){
-                dispatch(movieRemoved(movie['id']))
-                return Promise.resolve()
-            }
-            throw new Error(res.status)
-        }).then(() => {
-            api.getMovies(offset + limit,1).then(res => {
-                dispatch(moviesLoaded(res))
-            })
-        }).catch(e => {
-            console.error(e)
-        })
-    };
-
-
+    const getGenres = () => movie.genres.join(', ');
 
     return (
         <div className="movie-list_item_wrap">
             <div className="movie-list_item">
                 <div className={!isShowOptions ? "movie-list_item_dots" : "movie-list_item_cross"} onClick={toggleOptions}>{isShowOptions ? '✖' : '...'}</div>
                 {isShowOptions && <Options deleteMovie={deleteMovie}/>}
-                <img src={imagePath} onError={changeToDefaultImage} alt={movie['title']} />
+                <img src={imagePath} onError={changeToDefaultImage} alt={movie.title} />
                 <div className="movie-list_item_description">
-                    <h2 className="movie-list_item_title">{movie['title']}</h2>
+                    <h2 className="movie-list_item_title">{movie.title}</h2>
                     <div className="movie-list_item_year">{getMovieYear()}</div>
                     <div className="movie-list_item_genres">{getGenres()}</div>
                 </div>
