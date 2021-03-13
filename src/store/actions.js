@@ -18,3 +18,8 @@ export const toggleModal = (modal, state) => ({
     type: types.TOGGLE_MODAL,
     payload: {modal, state}
 })
+
+export const setCurrentMovie = (movie) => ({
+    type: types.SET_CURRENT_MOVIE,
+    payload: movie
+})

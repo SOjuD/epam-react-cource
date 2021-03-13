@@ -10,7 +10,7 @@
   z-index: 10
   display: flex
 
-  .add-movie-form
+  form
     width: 100%
     max-width: 600px
     display: flex
@@ -36,6 +36,16 @@
       text-transform: uppercase
       color: $white
       margin: 0 0 40px
+
+      &.delete-modal-title
+        margin-bottom: 20px
+
+    p
+      font-size: 18px
+      text-transform:  uppercase
+      color: $white
+      margin-top: 0
+      margin-bottom: 40px
 
     label
       display: block
@@ -86,21 +96,21 @@
       display: flex
       justify-content: flex-end
 
-  button
-    width: 150px
-    height: 40px
-    text-align: center
-    font-size: 18px
-    border-radius: 4px
-    cursor: pointer
+    button
+      width: 150px
+      height: 40px
+      text-align: center
+      font-size: 18px
+      border-radius: 4px
+      cursor: pointer
 
-  [type='reset']
-    border: 1px solid $red
-    background: none
-    color: $red
-    margin-right: 10px
+    [type='reset']
+      border: 1px solid $red
+      background: none
+      color: $red
+      margin-right: 10px
 
-  [type='submit']
-    border: none
-    background: $red
-    color: $white
+    [type='submit']
+      border: none
+      background: $red
+      color: $white

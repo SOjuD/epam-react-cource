@@ -1,12 +1,13 @@
 import React, {useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import defaultImage from '@/assets/img/default.jpg';
+import {setCurrentMovie, toggleModal} from "@/store/actions";
 
-const Options = ({deleteMovie}) => {
+const Options = ({showDeleteModal}) => {
     return(<ul className="movie-list_item_options">
         <li>Edit</li>
-        <li onClick={deleteMovie}>Delete</li>
+        <li onClick={showDeleteModal}>Delete</li>
     </ul>)
 }
 
@@ -14,6 +15,11 @@ const MovieListItem = ({movie}) => {
     const [imagePath, setImagePath] = useState(movie.poster_path);
     const [isShowOptions, toggleIsShowOptions] = useState(false);
     const toggleOptions = () => toggleIsShowOptions(!isShowOptions);
+    const dispatch = useDispatch();
+    const showDeleteModal = () => {
+        dispatch(setCurrentMovie({id: movie.id}))
+        dispatch(toggleModal('deleteModal', true))
+    };
     const changeToDefaultImage = () =>{
         setImagePath(defaultImage);
     }
@@ -28,7 +34,7 @@ const MovieListItem = ({movie}) => {
         <div className="movie-list_item_wrap">
             <div className="movie-list_item">
                 <div className={!isShowOptions ? "movie-list_item_dots" : "movie-list_item_cross"} onClick={toggleOptions}>{isShowOptions ? '✖' : '...'}</div>
-                {isShowOptions && <Options deleteMovie={deleteMovie}/>}
+                {isShowOptions && <Options showDeleteModal={showDeleteModal}/>}
                 <img src={imagePath} onError={changeToDefaultImage} alt={movie.title} />
                 <div className="movie-list_item_description">
                     <h2 className="movie-list_item_title">{movie.title}</h2>

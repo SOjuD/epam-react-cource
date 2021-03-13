@@ -34,6 +34,14 @@ const reducer = (state = initialState, action) => {
             const newState =  {...state};
             newState.modals[action.payload.modal] = action.payload.state;
             return newState;
+        case(types.SET_CURRENT_MOVIE) :
+            return {
+                ...state,
+                currentMovie: {
+                    ...state.currentMovie,
+                    ...action.payload
+                }
+            }
         default :
             return state;
     }

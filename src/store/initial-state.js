@@ -6,5 +6,8 @@ export const initialState = {
     modals:{
         addMovieModal: false,
         deleteModal: false
+    },
+    currentMovie: {
+        id: null
     }
 };
