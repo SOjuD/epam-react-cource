@@ -20,6 +20,5 @@ export const initialState = {
         revenue: null,
         genres: [],
         runtime: null
-
     }
 };

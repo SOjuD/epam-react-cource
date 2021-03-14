@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {api} from "@/api";
 import {movieRemoved, moviesLoaded, toggleModal} from "@/store/actions";
 import {useDispatch, useSelector} from "react-redux";
@@ -7,8 +7,8 @@ export const DeleteModal = () => {
     const {id} = useSelector(state => state.currentMovie);
     const {offset, limit} = useSelector(state => state.movieData);
     const dispatch = useDispatch();
-    const hideDeleteMovie = () => dispatch(toggleModal('deleteModal',false));
-    const deleteMovie = (e) => {
+    const hideDeleteMovie = useCallback(() => dispatch(toggleModal('deleteModal',false)), []);
+    const useDeleteMovie = (e) => {
         e.preventDefault();
         api.deleteMovie(id).then(res => {
             if(res === 204){
@@ -26,7 +26,7 @@ export const DeleteModal = () => {
         })
     };
     return (
-        <form className="delete-modal" onSubmit={deleteMovie}>
+        <form className="delete-modal" onSubmit={useDeleteMovie}>
             <div className="close" onClick={hideDeleteMovie}>✖</div>
             <h4 className="delete-modal-title">Delete Movie</h4>
             <p>Are you sure you want to delete this movie?</p>

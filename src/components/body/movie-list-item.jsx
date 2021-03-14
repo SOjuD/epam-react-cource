@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useCallback} from "react";
 import {useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import defaultImage from '@/assets/img/default.jpg';
@@ -16,25 +16,25 @@ const MovieListItem = ({movie}) => {
     const [isShowOptions, toggleIsShowOptions] = useState(false);
     const toggleOptions = () => toggleIsShowOptions(!isShowOptions);
     const dispatch = useDispatch();
-    const showDeleteModal = () => {
+    const showDeleteModal = useCallback(() => {
         toggleOptions();
         dispatch(setCurrentMovie({id: movie.id}))
         dispatch(toggleModal('deleteModal', true))
-    };
-    const showAddMovieModal = () => {
+    }, [movie.id]);
+    const showAddMovieModal = useCallback(() => {
         toggleOptions();
         dispatch(setCurrentMovie({id: movie.id}))
         dispatch(toggleModal('addMovieModal', true));
-    };
-    const changeToDefaultImage = () =>{
+    }, [movie.id]);
+    const changeToDefaultImage = () => {
         setImagePath(defaultImage);
     }
-    const getMovieYear = () => {
+    const getMovieYear = useCallback((date) => {
         const separator = '-';
-        const index = movie.release_date.indexOf(separator);
-        return movie.release_date.slice(0, index)
-    }
-    const getGenres = () => movie.genres.join(', ');
+        const index = date.indexOf(separator);
+        return date.release_date.slice(0, index)
+    }, []);
+    const getGenres = useCallback((genres) => genres.join(', '), []);
 
     return (
         <div className="movie-list_item_wrap">
@@ -44,8 +44,8 @@ const MovieListItem = ({movie}) => {
                 <img src={imagePath} onError={changeToDefaultImage} alt={movie.title} />
                 <div className="movie-list_item_description">
                     <h2 className="movie-list_item_title">{movie.title}</h2>
-                    <div className="movie-list_item_year">{getMovieYear()}</div>
-                    <div className="movie-list_item_genres">{getGenres()}</div>
+                    <div className="movie-list_item_year">{getMovieYear(movie.release_date)}</div>
+                    <div className="movie-list_item_genres">{getGenres(movie.genres)}</div>
                 </div>
             </div>
         </div>

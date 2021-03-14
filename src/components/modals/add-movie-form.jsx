@@ -1,11 +1,11 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {toggleModal} from "@/store/actions";
 
 export const AddMovieForm = () => {
     const dispatch = useDispatch();
-    const movie = useSelector(state => state.currentMovie) || {};
-    const hideAddMovie = () => dispatch(toggleModal('addMovieModal',false));
+    const movie = useSelector(state => state.currentMovie);
+    const hideAddMovie = useCallback(() => dispatch(toggleModal('addMovieModal',false)), []);
     const addMovie = (e) => {
         e.preventDefault();
         const data = new FormData(e.target);
