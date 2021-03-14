@@ -32,7 +32,7 @@ const MovieListItem = ({movie}) => {
     const getMovieYear = useCallback((date) => {
         const separator = '-';
         const index = date.indexOf(separator);
-        return date.release_date.slice(0, index)
+        return date.slice(0, index)
     }, []);
     const getGenres = useCallback((genres) => genres.join(', '), []);
 

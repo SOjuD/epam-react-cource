@@ -6,10 +6,10 @@ export const AddMovieForm = () => {
     const dispatch = useDispatch();
     const movie = useSelector(state => state.currentMovie);
     const hideAddMovie = useCallback(() => dispatch(toggleModal('addMovieModal',false)), []);
-    const addMovie = (e) => {
+    const addMovie = useCallback((e) => {
         e.preventDefault();
         const data = new FormData(e.target);
-    }
+    },[movie.id])
     return (
         <form onSubmit={addMovie} className="add-movie-form">
             <div className="close" onClick={hideAddMovie}>✖</div>
