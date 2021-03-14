@@ -8,6 +8,18 @@ export const initialState = {
         deleteModal: false
     },
     currentMovie: {
-        id: null
+        id: null,
+        title: null,
+        tagline: null,
+        vote_average: null,
+        vote_count: null,
+        release_date: null,
+        poster_path: null,
+        overview: null,
+        budget: null,
+        revenue: null,
+        genres: [],
+        runtime: null
+
     }
 };

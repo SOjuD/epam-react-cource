@@ -1,9 +1,10 @@
 import React from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {toggleModal} from "@/store/actions";
 
 export const AddMovieForm = () => {
     const dispatch = useDispatch();
+    const movie = useSelector(state => state.currentMovie) || {};
     const hideAddMovie = () => dispatch(toggleModal('addMovieModal',false));
     const addMovie = (e) => {
         e.preventDefault();
@@ -15,19 +16,19 @@ export const AddMovieForm = () => {
             <h4>Add Movie</h4>
             <label>
                 <span>Title</span>
-                <input type="text" placeholder="please type title here" name="title"/>
+                <input type="text" placeholder="please type title here" name="title" defaultValue={movie.title}/>
             </label>
             <label>
                 <span>Release date</span>
-                <input type="date" placeholder="please type date here" title="date"/>
+                <input type="date" placeholder="please type date here" title="date" defaultValue={movie.release_date}/>
             </label>
             <label>
-                <span>Movie URL</span>
-                <input type="text" placeholder="please type url here" title="url"/>
+                <span>Poster URL</span>
+                <input type="text" placeholder="please type url here" title="url" defaultValue={movie.poster_path}/>
             </label>
             <label>
                 <span>Genre</span>
-                <select title="genre" multiple   size={3}>
+                <select title="genre" multiple   size={3} defaultValue={movie.genres}>
                     <option value="Fantasy">Fantasy</option>
                     <option value="Animation">Animation</option>
                     <option value="Drama">Drama</option>
@@ -41,11 +42,11 @@ export const AddMovieForm = () => {
             </label>
             <label>
                 <span>Overview</span>
-                <input type="text" placeholder="please type overview here" title="overview"/>
+                <input type="text" placeholder="please type overview here" title="overview" defaultValue={movie.overview}/>
             </label>
             <label>
                 <span>Runtime</span>
-                <input type="number" placeholder="please type runtime here" title="overview"/>
+                <input type="number" placeholder="please type runtime here" title="overview" defaultValue={movie.runtime}/>
             </label>
 
             <div className="buttons">

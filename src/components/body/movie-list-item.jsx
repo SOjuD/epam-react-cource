@@ -17,10 +17,15 @@ const MovieListItem = ({movie}) => {
     const toggleOptions = () => toggleIsShowOptions(!isShowOptions);
     const dispatch = useDispatch();
     const showDeleteModal = () => {
+        toggleOptions();
         dispatch(setCurrentMovie({id: movie.id}))
         dispatch(toggleModal('deleteModal', true))
     };
-    const showAddMovieModal = () => dispatch(toggleModal('addMovieModal', true));
+    const showAddMovieModal = () => {
+        toggleOptions();
+        dispatch(setCurrentMovie({id: movie.id}))
+        dispatch(toggleModal('addMovieModal', true));
+    };
     const changeToDefaultImage = () =>{
         setImagePath(defaultImage);
     }
