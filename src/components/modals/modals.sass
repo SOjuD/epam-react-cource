@@ -20,6 +20,8 @@
     padding: 80px
     border-radius: 16px
     position: relative
+    max-height: 100vh
+    overflow-y: auto
 
     .close
       position: absolute
@@ -59,7 +61,7 @@
         display: block
         font-weight: 600
 
-      input, select
+      input, select, textarea
         width: 100%
         background: rgba($white, .2)
         color: rgba($white, .8)
@@ -68,6 +70,7 @@
         border-radius: 4px
         font-size: 16px
         -moz-appearance: textfield
+        resize: none
         scrollbar-width: none
         -ms-overflow-style: none
 
@@ -76,7 +79,8 @@
         &::-webkit-scrollbar
           display: none
 
-
+        &:invalid
+          border-color: red
 
         &:focus
           outline: none

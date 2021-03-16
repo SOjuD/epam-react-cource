@@ -29,11 +29,7 @@ const MovieListItem = ({movie}) => {
     const changeToDefaultImage = () => {
         setImagePath(defaultImage);
     }
-    const getMovieYear = useCallback((date) => {
-        const separator = '-';
-        const index = date.indexOf(separator);
-        return date.slice(0, index)
-    }, []);
+    const getMovieYear = useCallback((date) => date.slice(0, date.indexOf('-')), []);
     const getGenres = useCallback((genres) => genres.join(', '), []);
 
     return (
