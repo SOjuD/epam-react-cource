@@ -1,7 +1,7 @@
 import React from 'react'
 import './spinner-style.sass'
 
-export default () => {
+export const Spinner = () => {
     return (
         <div className="placeholderWrap">
             <svg
