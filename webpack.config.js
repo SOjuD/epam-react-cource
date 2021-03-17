@@ -42,7 +42,8 @@ module.exports = {
   },
   output: {
     filename: filename('js'),
-    path: PATHS.dist
+    path: PATHS.dist,
+    publicPath: "/"
   },
   resolve: {
     modules: ['node_modules'],
@@ -54,6 +55,7 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     hot: true,
+    historyApiFallback: true,
     overlay: {
       warnings: false,
       errors: true
