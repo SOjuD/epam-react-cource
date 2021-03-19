@@ -5,6 +5,7 @@ import "./movie-page-style.sass";
 import {api} from '@/api';
 import {Spinner} from "@/components/spinner";
 import {MovieContent} from "@/components/movie-page/movie-content";
+import {MovieHeader} from "@/components/movie-page/movie-header";
 
 export const MoviePage = () => {
     const {id} = useParams();
@@ -16,6 +17,7 @@ export const MoviePage = () => {
     }, [id])
     return(
         <header className="moviePage" style={{backgroundImage: `url(${headerBgImage})`}}>
+            <MovieHeader/>
             {!movie ? <Spinner/> : <MovieContent movie={movie}/>}
         </header>
     )

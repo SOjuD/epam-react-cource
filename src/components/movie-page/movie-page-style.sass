@@ -1,10 +1,11 @@
 @import "../../variables"
 
 .moviePage
-  padding: 60px 0
+  padding: 0 0 60px 0
   background-size: cover
   background-position: center
   position: relative
+  min-height: 500px
 
 .movie
   display: flex
@@ -58,3 +59,16 @@
   &_overview
     line-height: 1.4
     font-weight: 300
+
+.movie_header.container
+  display: flex
+  justify-content: space-between
+  align-items: center
+  margin-bottom: 20px
+  padding-top: 20px
+  .logo
+    height: 40px
+  .search-button
+    color: $red
+    width: 30px
+    height: 30px
