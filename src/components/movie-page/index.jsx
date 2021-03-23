@@ -13,6 +13,10 @@ export const MoviePage = () => {
     useEffect(() => {
         api.getMovie(id).then(res => {
             setMovie(res);
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
         })
     }, [id])
     return(

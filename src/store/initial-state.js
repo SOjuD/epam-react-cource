@@ -1,7 +1,10 @@
 export const initialState = {
     movieData: {
         isLoaded: false,
-        data: []
+        data: [],
+        sort: {
+            title: 'default',
+        },
     },
     modals:{
         addMovieModal: false,
@@ -22,5 +25,31 @@ export const initialState = {
         revenue: null,
         genres: [],
         runtime: null
-    }
+    },
+    availableSort: [
+        {
+            title: 'default',
+        },
+        {
+            title: 'date up',
+            sortBy: 'release_date',
+            sortOrder: 'asc',
+        },
+        {
+            title: 'date down',
+            sortBy: 'release_date',
+            sortOrder: 'desc',
+        },
+        {
+            title: 'rating up',
+            sortBy: 'vote_average',
+            sortOrder: 'asc',
+        },
+        {
+            title: 'rating down',
+            sortBy: 'vote_average',
+            sortOrder: 'desc',
+        },
+
+    ]
 };

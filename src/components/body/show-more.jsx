@@ -1,19 +1,11 @@
 import React, {useCallback} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {api} from "@/api";
-import {moviesLoaded, startLoading} from "@/store/actions";
+import {useMovies} from "@/hooks";
 
-export const ShowMore = () => {
-    const dispatch = useDispatch();
-    const {offset} = useSelector(state => state.movieData);
-
-
+export const ShowMore = ({offset, sort}) => {
+    const getMovies = useMovies();
     const getMoreMovies = useCallback(() => {
-        dispatch(startLoading())
-        api.getMovies(offset + api.defaultMovieListLength).then(res => {
-            dispatch(moviesLoaded(res))
-        })
-    }, [offset]);
+        getMovies({offset, sort}, false)
+    }, [offset, sort]);
 
     return(
         <button className="show-more" onClick={getMoreMovies}>Show more</button>
