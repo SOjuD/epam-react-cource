@@ -10,10 +10,10 @@ import {useSelector} from "react-redux";
 import {useMovies} from "@/hooks";
 
 export const Body = () => {
-    const categories = ['all', 'documentary', 'comedy', 'crime'];
-    const {isLoaded, data: movies, sort} = useSelector(state => state.movieData);
-    const sortBy = useSelector(state => state.availableSort);
-    const getMovies = useMovies();
+    const state = useSelector(state => state);
+    const {isLoaded, data: movies, sort, filter} = state.movieData;
+    const {availableSort, availableFilter} = state;
+    const getMovies = useMovies(sort, filter);
 
     useEffect(() => {
         getMovies({}, true);
@@ -22,8 +22,8 @@ export const Body = () => {
     return (
         <main className="body">
              <div className="container filtering">
-                    <SelectCategory categories={categories}/>
-                    <SortBy sortBy={sortBy} quantity={movies.length} current={sort.title}/>
+                    <SelectCategory categories={availableFilter} quantity={movies.length} sort={sort}/>
+                    <SortBy availableSort={availableSort} quantity={movies.length} currentSort={sort.title} filter={filter}/>
              </div>
             <div className="container">
                 <WasFound quantity={movies.length}/>
@@ -32,7 +32,7 @@ export const Body = () => {
                 <MovieList isLoaded={isLoaded} movies={movies}/>
             </div>
             <div className="container show-more_wrap">
-                <ShowMore offset={movies.length} sort={sort}/>
+                <ShowMore offset={movies.length} sort={sort} filter={filter}/>
             </div>
         </main>
     )

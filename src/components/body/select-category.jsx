@@ -1,18 +1,29 @@
-import React from "react";
+import React, {useCallback, useRef} from "react";
 import PropTypes from 'prop-types'
+import {useMovies} from "@/hooks";
 
-const SelectCategory = ({categories}) => {
+const SelectCategory = ({categories, quantity, sort}) => {
+    const ref = useRef(null);
+    const getMovies = useMovies();
+    const getSortedMovies = useCallback(() => {
+        getMovies({
+            offset: 0,
+            quantity,
+            sort,
+            filter: new FormData(ref.current).getAll('genre')
+        }, true);
+    }, [sort, quantity])
 
     const catElements = categories.map(el => {
         return(
             <label key={el} className="cat-select">
+                <input type="checkbox" name="genre" value={el}/>
                 <span>{el}</span>
-                <input type="radio" value={el}/>
             </label>
         )
     })
     return(
-        <form className="select-category">
+        <form className="select-category" ref={ref} onChange={getSortedMovies}>
             {catElements}
         </form>
     )

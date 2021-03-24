@@ -1,3 +1,5 @@
+import React from "react";
+
 export const initialState = {
     movieData: {
         isLoaded: false,
@@ -5,6 +7,7 @@ export const initialState = {
         sort: {
             title: 'default',
         },
+        filter: []
     },
     modals:{
         addMovieModal: false,
@@ -51,5 +54,6 @@ export const initialState = {
             sortOrder: 'desc',
         },
 
-    ]
+    ],
+    availableFilter : ['Fantasy', 'Animation', 'Drama', 'Comedy', 'Family', 'Action']
 };

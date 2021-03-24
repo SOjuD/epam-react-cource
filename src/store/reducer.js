@@ -50,6 +50,14 @@ const reducer = (state = initialState, {payload, type}) => {
                     sort: payload
                 }
             }
+        case(types.SET_CURRENT_FILTER) :
+            return {
+                ...state,
+                movieData: {
+                    ...state.movieData,
+                    filter: payload
+                }
+            }
         default :
             return state;
     }

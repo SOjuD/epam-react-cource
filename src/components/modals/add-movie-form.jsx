@@ -5,7 +5,7 @@ import {api} from '@/api';
 
 export const AddMovieForm = () => {
     const dispatch = useDispatch();
-    const currentMovie = useSelector(state => state.currentMovie);
+    const {currentMovie, availableFilter} = useSelector(state => state);
     const hideAddMovie = useCallback(() => dispatch(toggleModal('addMovieModal',false)), []);
     const showSuccessModal = useCallback(() => dispatch(toggleModal('successModal',true)), []);
     const showFailedModal = useCallback(() => dispatch(toggleModal('failedModal',true)), []);
@@ -55,15 +55,7 @@ export const AddMovieForm = () => {
             <label>
                 <span>Genre</span>
                 <select name="genre" required multiple   size={3} defaultValue={currentMovie.genres}>
-                    <option value="Fantasy">Fantasy</option>
-                    <option value="Animation">Animation</option>
-                    <option value="Drama">Drama</option>
-                    <option value="Comedy">Comedy</option>
-                    <option value="Family">Family</option>
-                    <option value="Action">Action</option>
-                    <option value="Science Fiction">Science Fiction</option>
-                    <option value="Mystery">Mystery</option>
-                    <option value="Documentary">Documentary</option>
+                    {availableFilter.map(el => <option key={el} value={el}>{el}</option>)}
                 </select>
             </label>
             <label>

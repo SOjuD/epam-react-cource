@@ -1,10 +1,10 @@
 import React, {useCallback} from "react";
 import {useMovies} from "@/hooks";
 
-export const ShowMore = ({offset, sort}) => {
+export const ShowMore = ({offset, sort, filter}) => {
     const getMovies = useMovies();
     const getMoreMovies = useCallback(() => {
-        getMovies({offset, sort}, false)
+        getMovies({offset, sort, filter}, false)
     }, [offset, sort]);
 
     return(

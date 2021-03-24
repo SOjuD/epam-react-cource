@@ -31,3 +31,8 @@ export const setCurrentSort = sort => ({
     type: types.SET_CURRENT_SORT,
     payload: sort
 })
+
+export const setCurrentFilter = filter => ({
+    type: types.SET_CURRENT_FILTER,
+    payload: filter
+})

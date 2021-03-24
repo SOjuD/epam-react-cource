@@ -2,22 +2,23 @@ import React, {useCallback, useRef} from "react";
 import PropTypes from 'prop-types';
 import {useMovies} from "@/hooks";
 
-export const SortBy = ({sortBy, quantity, current}) => {
+export const SortBy = ({availableSort, quantity, currentSort, filter}) => {
     const ref = useRef(null);
-    const varElements = sortBy.map(el => <option key={el.title} value={el.title}>{el.title}</option>);
+    const varElements = availableSort.map(el => <option key={el.title} value={el.title}>{el.title}</option>);
     const getMovies = useMovies();
     const getSortedMovies = useCallback(() => {
         getMovies({
             offset: 0,
             limit: quantity,
-            sort: sortBy.find(el => el.title === ref.current.value)
+            filter,
+            sort: availableSort.find(el => el.title === ref.current.value)
         }, true);
-    }, [quantity])
+    }, [filter, quantity])
 
     return (
         <div className="sort-by">
             <div className="sort-by_title">sort by</div>
-            <select name="sortBy" onChange={getSortedMovies} ref={ref} value={current}>
+            <select name="sortBy" onChange={getSortedMovies} ref={ref} value={currentSort}>
                 {varElements}
             </select>
         </div>
@@ -25,5 +26,5 @@ export const SortBy = ({sortBy, quantity, current}) => {
 }
 
 SortBy.propTypes = {
-    sortBy: PropTypes.array.isRequired
+    availableSort: PropTypes.array.isRequired
 }
