@@ -2,7 +2,7 @@ import React, {useCallback, useRef} from "react";
 import PropTypes from 'prop-types'
 import {useMovies} from "@/hooks";
 
-const SelectCategory = ({categories, quantity, sort}) => {
+const SelectCategory = ({categories, quantity, sort, filter}) => {
     const ref = useRef(null);
     const getMovies = useMovies();
     const getSortedMovies = useCallback(() => {
@@ -17,7 +17,7 @@ const SelectCategory = ({categories, quantity, sort}) => {
     const catElements = categories.map(el => {
         return(
             <label key={el} className="cat-select">
-                <input type="checkbox" name="genre" value={el}/>
+                <input type="checkbox" defaultChecked={filter.includes(el)} name="genre" value={el}/>
                 <span>{el}</span>
             </label>
         )

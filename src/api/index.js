@@ -7,13 +7,16 @@ class MovieApi {
             throw {status: response.status, body: textResponse, statusText: response.statusText};
         });
 
-    getMovies = ({offset, limit = this.defaultMovieListLength, sort, filter}) => {
+    getMovies = ({offset, limit = this.defaultMovieListLength, sort, filter, search}) => {
         let getParams = `?offset=${offset || 0}&limit=${limit || this.defaultMovieListLength}`;
         if(sort){
             if(sort.title !== 'default') getParams += `&sortBy=${sort.sortBy}&sortOrder=${sort.sortOrder}`
         }
         if(filter){
             if(filter.length) getParams += `&filter=${filter.toString()}`
+        }
+        if(search){
+            getParams +=`&search=${search}&searchBy=title`
         }
         return fetch(`${this.baseUrl}/movies${getParams}`, {
             method: "GET",

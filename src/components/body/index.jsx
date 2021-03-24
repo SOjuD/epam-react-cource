@@ -22,7 +22,7 @@ export const Body = () => {
     return (
         <main className="body">
              <div className="container filtering">
-                    <SelectCategory categories={availableFilter} quantity={movies.length} sort={sort}/>
+                    <SelectCategory categories={availableFilter} filter={filter} quantity={movies.length} sort={sort}/>
                     <SortBy availableSort={availableSort} quantity={movies.length} currentSort={sort.title} filter={filter}/>
              </div>
             <div className="container">
