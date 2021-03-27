@@ -2,12 +2,14 @@ import React, {useCallback} from "react";
 import {api} from "@/api";
 import {movieRemoved, moviesLoaded, toggleModal} from "@/store/actions";
 import {useDispatch, useSelector} from "react-redux";
+import {useMovies} from "@/hooks";
 
 export const DeleteModal = () => {
     const {id} = useSelector(state => state.currentMovie);
-    const {offset, limit} = useSelector(state => state.movieData);
+    const {offset, sort, filter, data} = useSelector(state => state.movieData);
     const dispatch = useDispatch();
     const hideDeleteMovie = useCallback(() => dispatch(toggleModal('deleteModal',false)), []);
+    const getMovies = useMovies();
     const useDeleteMovie = (e) => {
         e.preventDefault();
         api.deleteMovie(id).then(res => {
@@ -17,9 +19,7 @@ export const DeleteModal = () => {
             }
             throw new Error(res.status)
         }).then(() => {
-            api.getMovies(offset + limit,1).then(res => {
-                dispatch(moviesLoaded(res))
-            })
+            getMovies({offset: data.length, limit: 1, sort, filter}, false)
             hideDeleteMovie();
         }).catch(e => {
             console.error(e)

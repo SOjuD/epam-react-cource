@@ -37,7 +37,7 @@ const reducer = (state = initialState, {payload, type}) => {
             if(!payload.state) newState.currentMovie.id = null;
             return newState;
         case(types.SET_CURRENT_MOVIE) :
-            const currentMovie = state.movieData.data.find(el => el.id === action.payload.id)
+            const currentMovie = state.movieData.data.find(el => el.id === payload.id)
             return {
                 ...state,
                 currentMovie

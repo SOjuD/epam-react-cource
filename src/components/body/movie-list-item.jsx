@@ -17,12 +17,12 @@ const MovieListItem = ({movie}) => {
     const [isShowOptions, toggleIsShowOptions] = useState(false);
     const toggleOptions = () => toggleIsShowOptions(!isShowOptions);
     const dispatch = useDispatch();
-    const showDeleteModal = useCallback(() => {
+    const showDeleteModal = useCallback((e) => {
         toggleOptions();
         dispatch(setCurrentMovie({id: movie.id}))
         dispatch(toggleModal('deleteModal', true))
     }, [movie.id]);
-    const showAddMovieModal = useCallback(() => {
+    const showAddMovieModal = useCallback((e) => {
         toggleOptions();
         dispatch(setCurrentMovie({id: movie.id}))
         dispatch(toggleModal('addMovieModal', true));
@@ -30,9 +30,9 @@ const MovieListItem = ({movie}) => {
 
     return (
         <div className="movie-list_item_wrap">
+            <div className={!isShowOptions ? "movie-list_item_dots" : "movie-list_item_cross"} onClick={toggleOptions}>{isShowOptions ? '✖' : '...'}</div>
+            {isShowOptions && <Options showDeleteModal={showDeleteModal} showAddMovieModal={showAddMovieModal}/>}
             <Link to={`/movie/${movie.id}`}  className="movie-list_item">
-                <div className={!isShowOptions ? "movie-list_item_dots" : "movie-list_item_cross"} onClick={toggleOptions}>{isShowOptions ? '✖' : '...'}</div>
-                {isShowOptions && <Options showDeleteModal={showDeleteModal} showAddMovieModal={showAddMovieModal}/>}
                 <Image path={movie.poster_path} title={movie.title}/>
                 <div className="movie-list_item_description">
                     <h2 className="movie-list_item_title">{movie.title}</h2>
