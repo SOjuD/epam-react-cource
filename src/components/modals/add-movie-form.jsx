@@ -15,13 +15,13 @@ export const AddMovieForm = () => {
         const data = {
             title: formData.get('title'),
             tagline: 'tags',
-            vote_average: formData.get,
-            vote_count: 0,
+            vote_average: +formData.get('rating'),
+            vote_count: 1,
             release_date: formData.get('date'),
             poster_path: formData.get('url'),
             overview: formData.get('overview'),
-            budget: 0,
-            revenue: 0,
+            budget: 1,
+            revenue: 1,
             genres: formData.getAll('genre'),
             runtime: +formData.get('runtime')
         }

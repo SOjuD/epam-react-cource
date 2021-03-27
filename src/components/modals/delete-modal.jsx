@@ -6,7 +6,7 @@ import {useMovies} from "@/hooks";
 
 export const DeleteModal = () => {
     const {id} = useSelector(state => state.currentMovie);
-    const {offset, sort, filter, data} = useSelector(state => state.movieData);
+    const {sort, filter, data} = useSelector(state => state.movieData);
     const dispatch = useDispatch();
     const hideDeleteMovie = useCallback(() => dispatch(toggleModal('deleteModal',false)), []);
     const getMovies = useMovies();
