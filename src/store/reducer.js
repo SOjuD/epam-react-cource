@@ -34,7 +34,7 @@ const reducer = (state = initialState, {payload, type}) => {
         case(types.TOGGLE_MODAL) :
             const newState =  {...state};
             newState.modals[payload.modal] = payload.state;
-            if(!payload.state) newState.currentMovie.id = null;
+            if(!payload.state) newState.currentMovie = initialState.currentMovie;
             return newState;
         case(types.SET_CURRENT_MOVIE) :
             const currentMovie = state.movieData.data.find(el => el.id === payload.id)

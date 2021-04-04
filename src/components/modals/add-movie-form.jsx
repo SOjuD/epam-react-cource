@@ -1,33 +1,31 @@
 import React, {useCallback} from "react";
 import {useDispatch, useSelector} from "react-redux";
+import {Formik, Form, Field} from 'formik';
+import DatePicker from "react-datepicker";
 import {toggleModal} from "@/store/actions";
+import "react-datepicker/dist/react-datepicker.css";
 import {api} from '@/api';
 
 export const AddMovieForm = () => {
     const dispatch = useDispatch();
     const {currentMovie, availableFilter} = useSelector(state => state);
+    currentMovie.release_date = new Date(currentMovie.release_date);
     const hideAddMovie = useCallback(() => dispatch(toggleModal('addMovieModal',false)), []);
     const showSuccessModal = useCallback(() => dispatch(toggleModal('successModal',true)), []);
     const showFailedModal = useCallback(() => dispatch(toggleModal('failedModal',true)), []);
-    const addMovie = useCallback((e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const data = {
-            title: formData.get('title'),
-            tagline: 'tags',
-            vote_average: +formData.get('rating'),
-            vote_count: 1,
-            release_date: formData.get('date'),
-            poster_path: formData.get('url'),
-            overview: formData.get('overview'),
-            budget: 1,
-            revenue: 1,
-            genres: formData.getAll('genre'),
-            runtime: +formData.get('runtime')
-        }
-        if(currentMovie.id) data.id = currentMovie.id;
-        const request = data.id ? api.updateMovie : api.addMovie;
-        request(data).finally(() => {
+    const validateUrl = (value) => {
+        if(!value) return 'required value';
+        if(!value.match(/^https?:\/\//)) return 'value need to be link';
+    };
+    const validateRating = (value) => {
+        if(value < 0 || value > 10) return 'incorrect rating value'
+    }
+    const validateValue = (value) => value ? undefined : 'required value';
+    const addMovie = useCallback((values) => {
+        if(currentMovie.id) values.id = currentMovie.id;
+        else delete values.id;
+        const request = values.id ? api.updateMovie : api.addMovie;
+        request(values).finally(() => {
             hideAddMovie();
         }).then(res => {
             showSuccessModal();
@@ -35,46 +33,77 @@ export const AddMovieForm = () => {
             showFailedModal();
             console.error(e)
         })
-    },[currentMovie.id])
-    return (
-        <form onSubmit={addMovie} className="add-movie-form">
-            <div className="close" onClick={hideAddMovie}>✖</div>
-            <h4>Add Movie</h4>
-            <label>
-                <span>Title</span>
-                <input type="text" required placeholder="please type title here" name="title" defaultValue={currentMovie.title}/>
-            </label>
-            <label>
-                <span>Release date</span>
-                <input type="date" required placeholder="please type date here" name="date" defaultValue={currentMovie.release_date}/>
-            </label>
-            <label>
-                <span>Poster URL</span>
-                <input type="text" required placeholder="please type url here" name="url" defaultValue={currentMovie.poster_path}/>
-            </label>
-            <label>
-                <span>Genre</span>
-                <select name="genre" required multiple   size={3} defaultValue={currentMovie.genres}>
-                    {availableFilter.map(el => <option key={el} value={el}>{el}</option>)}
-                </select>
-            </label>
-            <label>
-                <span>Overview</span>
-                <textarea placeholder="please type overview here" name="overview" required defaultValue={currentMovie.overview}/>
-            </label>
-            <label>
-                <span>Runtime</span>
-                <input type="number" required placeholder="please type runtime here" name="runtime" defaultValue={currentMovie.runtime}/>
-            </label>
-            <label>
-                <span>Rating</span>
-                <input type="number" required placeholder="please type rating here" name="rating" defaultValue={currentMovie.rating}/>
-            </label>
+    },[currentMovie.id]);
 
-            <div className="buttons">
-                <button type="reset">Reset</button>
-                <button type="submit">Submit</button>
-            </div>
-        </form>
+    return (
+        <Formik initialValues={currentMovie} onSubmit={addMovie}>
+            {(props) => {
+                const {values, setFieldValue, errors, isValid} = props;
+                return <Form className="add-movie-form">
+                    <div className="close" onClick={hideAddMovie}>✖</div>
+                    <h4>Add Movie</h4>
+                    <label>
+                        <span>{errors.title || 'Title'}</span>
+                        <Field type="text"
+                               placeholder="please type title here"
+                               name="title"
+                               validate={validateValue}/>
+                    </label>
+                    <label>
+                        <span>{errors.release_date || 'Release date'}</span>
+                        <DatePicker
+                            selected={values.release_date}
+                            name="date"
+                            dateFormat="MMMM d, yyyy"
+                            onChange={ date => setFieldValue('release_date', date)}
+                            validate={validateValue}/>
+                    </label>
+                    <label>
+                        <span>{errors.poster_path || 'Poster URL'}</span>
+                        <Field type="text"
+                               placeholder="please type url here"
+                               name="poster_path"
+                               validate={validateUrl}/>
+                    </label>
+                    <label>
+                        <span>{errors.genre || 'Genre'}</span>
+                        <Field
+                            as='select'
+                            name="genres"
+                            multiple={true}
+                            size={3}
+                            validate={validateValue}>
+                            {availableFilter.map(el => <option key={el} value={el}>{el}</option>)}
+                        </Field>
+                    </label>
+                    <label>
+                        <span>{errors.overview || 'Overview'}</span>
+                        <Field  type='textarea'
+                                placeholder="please type overview here"
+                                name="overview"
+                                validate={validateValue}/>
+                    </label>
+                    <label>
+                        <span>{errors.runtime || 'Runtime'}</span>
+                        <Field type="number"
+                               placeholder="please type runtime here"
+                               name="runtime"/>
+                    </label>
+                    <label>
+                        <span>{errors.vote_average || 'Rating'}</span>
+                        <Field type="number"
+                               placeholder="please type rating here"
+                               name="vote_average"
+                               validate={validateRating}/>
+                    </label>
+
+                    <div className="buttons">
+                        <button type="reset">Reset</button>
+                        <button type="submit" disabled={!isValid}>Submit</button>
+                    </div>
+                </Form>
+            }}
+
+        </Formik>
     )
 }

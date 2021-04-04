@@ -21,12 +21,12 @@ const MovieListItem = ({movie}) => {
         toggleOptions();
         dispatch(setCurrentMovie({id: movie.id}))
         dispatch(toggleModal('deleteModal', true))
-    }, [movie.id]);
+    }, [movie.id, isShowOptions]);
     const showAddMovieModal = useCallback((e) => {
         toggleOptions();
         dispatch(setCurrentMovie({id: movie.id}))
         dispatch(toggleModal('addMovieModal', true));
-    }, [movie.id]);
+    }, [movie.id, isShowOptions]);
 
     return (
         <div className="movie-list_item_wrap">

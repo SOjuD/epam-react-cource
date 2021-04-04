@@ -82,20 +82,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          'css-loader',
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: isDev,
-              reloadAll: true
-            },
-          },
-        ]
-      },
-      {
-        test: /\.s[ac]ss$/,
+        test: /\.((c|sa|sc)ss)$/,
         use: [
           'style-loader',
           {

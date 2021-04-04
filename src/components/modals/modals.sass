@@ -100,13 +100,19 @@
       display: flex
       justify-content: flex-end
 
-    button
-      width: 150px
-      height: 40px
-      text-align: center
-      font-size: 18px
-      border-radius: 4px
-      cursor: pointer
+      button
+        width: 150px
+        height: 40px
+        text-align: center
+        font-size: 18px
+        border-radius: 4px
+        cursor: pointer
+
+        &[disabled]
+          opacity: .3
+
+    .react-datepicker-wrapper
+      width: 100%
 
     [type='reset']
       border: 1px solid $red

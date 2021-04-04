@@ -17,17 +17,17 @@ export const initialState = {
     },
     currentMovie: {
         id: null,
-        title: null,
-        tagline: null,
-        vote_average: null,
-        vote_count: null,
-        release_date: null,
-        poster_path: null,
-        overview: null,
-        budget: null,
-        revenue: null,
+        title: '',
+        tagline: 'tagline',
+        vote_average: 1,
+        vote_count: 1,
+        release_date: new Date(),
+        poster_path: '',
+        overview: '',
+        budget: 1,
+        revenue: 1,
         genres: [],
-        runtime: null
+        runtime: 1
     },
     availableSort: [
         {
