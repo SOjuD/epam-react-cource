@@ -10,6 +10,7 @@ import {Modal} from "@/components/modals";
 import {MoviePage} from "@/components/movie-page";
 
 import './app-style.sass';
+import {NotFound} from "@/components/not-found";
 
 export const App = () => {
     const isShowModal = useSelector(state => Object.values(state.modals).some(el => el === true));
@@ -17,15 +18,20 @@ export const App = () => {
     return (
         <Router>
             <Switch>
-                <Route exact path="/">
+                <Route exact path={["/", "/search/:search"]}>
                     <Header/>
+                    <Body />
+                    <Footer />
                 </Route>
                 <Route path="/movie/:id">
                     <MoviePage/>
+                    <Body />
+                    <Footer />
+                </Route>
+                <Route path="*">
+                    <NotFound/>
                 </Route>
             </Switch>
-            <Body />
-            <Footer />
             {isShowModal && <Modal/>}
         </Router>
     )

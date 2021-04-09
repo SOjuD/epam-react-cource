@@ -1,21 +1,25 @@
-import React, {useRef, useCallback} from "react";
-import {useMovies} from "@/hooks";
+import React, {useCallback} from "react";
+import { useHistory } from "react-router-dom";
+import debounce from "lodash/debounce";
 
 export const FindMovie = () => {
-    const getMovies = useMovies();
-    const inputRef = useRef(null);
+
+    const debounceSearch = useCallback(debounce(
+        (value) => {
+            if(value) history.push(`search/${value}`)
+            else history.push('/')
+        },
+        500),
+        [])
+
+    const history = useHistory();
     const searchMovie = useCallback((e) => {
-        e.preventDefault()
-        getMovies({
-            search: inputRef.current.value
-        }, true);
-        inputRef.current.value = '';
+        debounceSearch(e.target.value)
     }, [])
     return (
-        <form className="find-movie" onSubmit={searchMovie}>
+        <form className="find-movie">
             <h4>Find your movie</h4>
-            <input type="search" name="search" placeholder="What do wou want to watch?" ref={inputRef}/>
-            <button>Search</button>
+            <input type="search" onChange={searchMovie} name="search" placeholder="What do wou want to watch?"/>
         </form>
     )
 }

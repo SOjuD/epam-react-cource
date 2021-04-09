@@ -1,4 +1,5 @@
 import React, {useEffect} from "react";
+import {useParams} from "react-router-dom";
 
 import './body-style.sass';
 import {SelectCategory} from "@/components/body/select-category";
@@ -14,10 +15,10 @@ export const Body = () => {
     const {isLoaded, data: movies, sort, filter} = state.movieData;
     const {availableSort, availableFilter} = state;
     const getMovies = useMovies(sort, filter);
-
+    const params = useParams();
     useEffect(() => {
-        getMovies({}, true);
-    }, []);
+        getMovies(params, true);
+    }, [params]);
 
     return (
         <main className="body">
