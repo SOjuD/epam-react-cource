@@ -42,7 +42,8 @@ module.exports = {
   },
   output: {
     filename: filename('js'),
-    path: PATHS.dist
+    path: PATHS.dist,
+    publicPath: "/"
   },
   resolve: {
     modules: ['node_modules'],
@@ -54,6 +55,7 @@ module.exports = {
   optimization: optimization(),
   devServer: {
     hot: true,
+    historyApiFallback: true,
     overlay: {
       warnings: false,
       errors: true
@@ -80,20 +82,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: [
-          'css-loader',
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              hmr: isDev,
-              reloadAll: true
-            },
-          },
-        ]
-      },
-      {
-        test: /\.s[ac]ss$/,
+        test: /\.((c|sa|sc)ss)$/,
         use: [
           'style-loader',
           {

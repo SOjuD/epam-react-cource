@@ -1,62 +1,45 @@
-import React, {useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import React, {useState, useCallback} from "react";
+import {useDispatch} from "react-redux";
+import {Link} from "react-router-dom";
 import PropTypes from 'prop-types';
-import defaultImage from '@/assets/img/default.jpg';
-import {api} from "@/api";
-import {movieRemoved, moviesLoaded} from "@/store/actions";
+import {Image} from "@/components/error-boundary/image";
+import {setCurrentMovie, toggleModal} from "@/store/actions";
+import {getGenres, getMovieYear} from "@/services/movie-services";
 
-const Options = ({deleteMovie}) => {
+const Options = ({showDeleteModal, showAddMovieModal}) => {
     return(<ul className="movie-list_item_options">
-        <li>Edit</li>
-        <li onClick={deleteMovie}>Delete</li>
+        <li onClick={showAddMovieModal}>Edit</li>
+        <li onClick={showDeleteModal}>Delete</li>
     </ul>)
 }
 
 const MovieListItem = ({movie}) => {
-    const [imagePath, setImagePath] = useState(movie['poster_path']);
     const [isShowOptions, toggleIsShowOptions] = useState(false);
-    const {offset, limit} = useSelector(state => state.movieData);
-    const dispatch = useDispatch();
     const toggleOptions = () => toggleIsShowOptions(!isShowOptions);
-    const changeToDefaultImage = () =>{
-        setImagePath(defaultImage);
-    }
-    const getMovieYear = () => {
-        const separator = '-';
-        const index = movie['release_date'].indexOf(separator);
-        return movie['release_date'].slice(0, index)
-    }
-    const getGenres = () => movie['genres'].join(', ');
-    const deleteMovie = () =>{
-        api.deleteMovie(movie['id']).then(res => {
-            if(res === 204){
-                dispatch(movieRemoved(movie['id']))
-                return Promise.resolve()
-            }
-            throw new Error(res.status)
-        }).then(() => {
-            api.getMovies(offset + limit,1).then(res => {
-                dispatch(moviesLoaded(res))
-            })
-        }).catch(e => {
-            console.error(e)
-        })
-    };
-
-
+    const dispatch = useDispatch();
+    const showDeleteModal = useCallback((e) => {
+        toggleOptions();
+        dispatch(setCurrentMovie({id: movie.id}))
+        dispatch(toggleModal('deleteModal', true))
+    }, [movie.id, isShowOptions]);
+    const showAddMovieModal = useCallback((e) => {
+        toggleOptions();
+        dispatch(setCurrentMovie({id: movie.id}))
+        dispatch(toggleModal('addMovieModal', true));
+    }, [movie.id, isShowOptions]);
 
     return (
         <div className="movie-list_item_wrap">
-            <div className="movie-list_item">
-                <div className={!isShowOptions ? "movie-list_item_dots" : "movie-list_item_cross"} onClick={toggleOptions}>{isShowOptions ? '✖' : '...'}</div>
-                {isShowOptions && <Options deleteMovie={deleteMovie}/>}
-                <img src={imagePath} onError={changeToDefaultImage} alt={movie['title']} />
+            <div className={!isShowOptions ? "movie-list_item_dots" : "movie-list_item_cross"} onClick={toggleOptions}>{isShowOptions ? '✖' : '...'}</div>
+            {isShowOptions && <Options showDeleteModal={showDeleteModal} showAddMovieModal={showAddMovieModal}/>}
+            <Link to={`/movie/${movie.id}`}  className="movie-list_item">
+                <Image path={movie.poster_path} title={movie.title}/>
                 <div className="movie-list_item_description">
-                    <h2 className="movie-list_item_title">{movie['title']}</h2>
-                    <div className="movie-list_item_year">{getMovieYear()}</div>
-                    <div className="movie-list_item_genres">{getGenres()}</div>
+                    <h2 className="movie-list_item_title">{movie.title}</h2>
+                    <div className="movie-list_item_year">{getMovieYear(movie.release_date)}</div>
+                    <div className="movie-list_item_genres">{getGenres(movie.genres)}</div>
                 </div>
-            </div>
+            </Link>
         </div>
     )
 }

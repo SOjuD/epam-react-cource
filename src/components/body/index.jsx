@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {useParams} from "react-router-dom";
 
 import './body-style.sass';
 import {SelectCategory} from "@/components/body/select-category";
@@ -6,24 +7,33 @@ import {SortBy} from "@/components/body/sort-by";
 import {MovieList} from "@/components/body/movie-list";
 import {WasFound} from "@/components/body/was-found";
 import {ShowMore} from "@/components/body/show-more";
+import {useSelector} from "react-redux";
+import {useMovies} from "@/hooks";
 
 export const Body = () => {
-    const categories = ['all', 'documentary', 'comedy', 'crime'];
-    const variations = ['date', 'rating'];
+    const state = useSelector(state => state);
+    const {isLoaded, data: movies, sort, filter} = state.movieData;
+    const {availableSort, availableFilter} = state;
+    const getMovies = useMovies(sort, filter);
+    const params = useParams();
+    useEffect(() => {
+        getMovies(params, true);
+    }, [params]);
+
     return (
         <main className="body">
              <div className="container filtering">
-                    <SelectCategory categories={categories}/>
-                    <SortBy variations={variations}/>
+                    <SelectCategory categories={availableFilter} filter={filter} quantity={movies.length} sort={sort}/>
+                    <SortBy availableSort={availableSort} quantity={movies.length} currentSort={sort.title} filter={filter}/>
              </div>
             <div className="container">
-                <WasFound/>
+                <WasFound quantity={movies.length}/>
             </div>
             <div className="container movie-list">
-                <MovieList/>
+                <MovieList isLoaded={isLoaded} movies={movies}/>
             </div>
             <div className="container show-more_wrap">
-                <ShowMore/>
+                <ShowMore offset={movies.length} sort={sort} filter={filter}/>
             </div>
         </main>
     )
