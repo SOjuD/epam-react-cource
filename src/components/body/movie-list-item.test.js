@@ -7,6 +7,7 @@ import {Provider} from "react-redux";
 import {store} from "@/store/reducer";
 import {Router} from "react-router-dom";
 import movie from '@/__mocks__/movie.json';
+import {Modal} from '@/components/modals'
 
 const renderWithRedux = (component) => render(<Provider store={store}>{component}</Provider>);
 const withRouter = (component, route = "/") => {
@@ -29,11 +30,16 @@ describe('render Movie page', () => {
     })
 
     it('click on edit button', async () => {
-        const {getByText, findByText} = renderWithRedux(withRouter(<MovieListItem movie={movie}/>));
-        const openButton = getByText('...');
-        await userEvent.click(openButton);
-        const editButton = findByText(/edit/i);
-        expect(editButton).toBeInTheDocument();
+        const {getByText, findByText, findByDisplayValue} = renderWithRedux(withRouter( <>
+                                                                                                    <Modal/>
+                                                                                                    <MovieListItem movie={movie}/>
+                                                                                               </>));
+        userEvent.click(getByText('...'));
+        const editButton = await findByText(/edit/i);
+        userEvent.click(editButton);
+        // const titleInput = await findByDisplayValue('/Zootopia/i');
+
+        // expect(titleInput).toBeInTheDocument();
 
     })
 })

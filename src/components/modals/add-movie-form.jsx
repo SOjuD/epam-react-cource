@@ -50,6 +50,7 @@ const MyForm = ({availableFilter, hideAddMovie}) => {
                 name="genres"
                 multiple={true}
                 size={3}
+                data-testid='genre'
                 validate={validateValue}>
                 {availableFilter.map(el => <option key={el} value={el}>{el}</option>)}
             </Field>
@@ -65,14 +66,16 @@ const MyForm = ({availableFilter, hideAddMovie}) => {
             <span>{errors.runtime || 'Runtime'}</span>
             <Field type="number"
                    placeholder="please type runtime here"
-                   name="runtime"/>
+                   name="runtime"
+                   data-testid="runtime"/>
         </label>
         <label>
             <span>{errors.vote_average || 'Rating'}</span>
             <Field type="number"
                    placeholder="please type rating here"
                    name="vote_average"
-                   validate={validateRating}/>
+                   validate={validateRating}
+                   data-testid="vote_average"/>
         </label>
 
         <div className="buttons">

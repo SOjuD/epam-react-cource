@@ -2,7 +2,7 @@ import {createStore, compose} from "redux";
 import {initialState} from './initial-state';
 import {types} from "@/store/types";
 
-const reducer = (state = initialState, {payload, type}) => {
+export const reducer = (state = initialState, {payload, type}) => {
     switch(type){
         case(types.MOVIES_LOADED) :
             const data = payload.replace ? payload.movies.data : [...state.movieData.data, ...payload.movies.data];
