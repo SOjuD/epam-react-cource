@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --mode development --open",
-    "build": "cross-env NODE_ENV=production webpack --mode production",
+    "start": "NODE_ENV=development webpack-dev-server --open --config webpack/webpack.client.js",
+    "server": "NODE_ENV=development node ./server --config webpack/webpack.server.js",
+    "build": "NODE_ENV=production --config webpack/webpack.client.js",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -50,10 +51,16 @@
     "webpack": "^4.41.5",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-middleware": "^4.2.0",
+    "webpack-dev-server": "^3.10.1",
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-hot-server-middleware": "^0.6.1",
+    "webpack-merge": "^5.7.3",
+    "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.8.3",
+    "express": "^4.17.1",
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",

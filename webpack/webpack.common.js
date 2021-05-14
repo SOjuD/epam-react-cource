@@ -4,17 +4,19 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetWebpackPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 
 const PATHS = {
-  src: path.join(__dirname, './src'),
-  dist: path.join(__dirname, './dist'),
+  src: path.join(__dirname, '../src'),
+  dist: path.join(__dirname, '../dist'),
   assets: 'assets/',
 }
+module.exports.PATHS = PATHS;
 
 const isDev = process.env.NODE_ENV === 'development'
 const isProd = !isDev
+module.exports.isDev = isDev
+module.exports.isProd = isProd
 
 const optimization = () => {
   const config = {
@@ -33,34 +35,18 @@ const optimization = () => {
   return config
 }
 
-const filename = ext => isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`
+const filename = ext => isDev ? `[name].${ext}` : `[name].[contenthash].${ext}`;
+module.exports.filename = filename;
 
-module.exports = {
-  mode: process.env.NODE_ENV,
-  entry: {
-    app: PATHS.src,
-  },
-  output: {
-    filename: filename('js'),
-    path: PATHS.dist,
-    publicPath: "/"
-  },
+module.exports.common = {
   resolve: {
     modules: ['node_modules'],
     extensions: ['.js', '.sass', '.scss', '.css', '.jsx'],
     alias: {
-      '@': path.resolve(__dirname, 'src'),
+      '@': path.resolve(__dirname, '../src'),
     }
   },
   optimization: optimization(),
-  devServer: {
-    hot: true,
-    historyApiFallback: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    }
-  },
   devtool: isDev ? 'source-map' : '',
   plugins: [
     new CleanWebpackPlugin(),
@@ -71,12 +57,6 @@ module.exports = {
     ]),
     new MiniCssExtractPlugin({
       filename: filename('css')
-    }),
-    new HTMLWebpackPlugin({
-      template: './src/index.html',
-      minify: {
-        collapseWhitespace: isProd
-      }
     })
   ],
   module: {
