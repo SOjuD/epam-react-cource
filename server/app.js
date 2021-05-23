@@ -12,13 +12,13 @@ if (process.env.NODE_ENV === 'development') {
   const compiler = webpack(webpackConfig);
 
   app.use(webpackDevMiddleware(compiler));
-  
   app.use(webpackHotMiddleware(compiler.compilers.find(c => c.name === 'client')));
   app.use(webpackHotServerMiddleware(compiler));
+  app.use(express.static('../public'));
 } else {
-  const serverRenderer = require('../dist/serverRenderer').default;
+  const serverRenderer = require('../public/js/serverRenderer').default;
 
-  app.use(express.static('dist'));
+  app.use(express.static('../public'));
   app.use(serverRenderer());
 }
 

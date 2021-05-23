@@ -2,7 +2,7 @@ import {createStore, compose} from "redux";
 import {initialState} from './initial-state';
 import {types} from "@/store/types";
 
-export const reducer = (state = initialState, {payload, type}) => {
+export const reducer = (state = {}, {payload, type}) => {
     switch(type){
         case(types.MOVIES_LOADED) :
             const data = payload.replace ? payload.movies.data : [...state.movieData.data, ...payload.movies.data];
@@ -37,10 +37,9 @@ export const reducer = (state = initialState, {payload, type}) => {
             if(!payload.state) newState.currentMovie = initialState.currentMovie;
             return newState;
         case(types.SET_CURRENT_MOVIE) :
-            const currentMovie = state.movieData.data.find(el => el.id === payload.id)
             return {
                 ...state,
-                currentMovie
+                currentMovie: payload
             }
         case(types.SET_CURRENT_SORT) :
             return {
@@ -65,4 +64,4 @@ export const reducer = (state = initialState, {payload, type}) => {
 const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ &&
     window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ trace: true, traceLimit: 25 })) || compose;
 
-export const store = createStore(reducer, composeEnhancers());
+export default (state = initialState) => createStore(reducer, state, composeEnhancers());

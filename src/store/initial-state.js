@@ -1,8 +1,24 @@
 import React from "react";
 
+export const emptyMovie = {
+    id: null,
+    title: '',
+    tagline: 'tagline',
+    vote_average: 1,
+    vote_count: 1,
+    release_date: new Date(),
+    poster_path: '',
+    overview: '',
+    budget: 1,
+    revenue: 1,
+    genres: [],
+    runtime: 1
+};
+
+
 export const initialState = {
     movieData: {
-        isLoaded: false,
+        isLoaded: true,
         data: [],
         sort: {
             title: 'default',
@@ -15,20 +31,7 @@ export const initialState = {
         successModal: false,
         failedModal: false
     },
-    currentMovie: {
-        id: null,
-        title: '',
-        tagline: 'tagline',
-        vote_average: 1,
-        vote_count: 1,
-        release_date: new Date(),
-        poster_path: '',
-        overview: '',
-        budget: 1,
-        revenue: 1,
-        genres: [],
-        runtime: 1
-    },
+    currentMovie: emptyMovie,
     availableSort: [
         {
             title: 'default',

@@ -24,7 +24,7 @@ const MovieListItem = ({movie}) => {
     }, [movie.id, isShowOptions]);
     const showAddMovieModal = useCallback((e) => {
         toggleOptions();
-        dispatch(setCurrentMovie({id: movie.id}))
+        dispatch(setCurrentMovie(movie))
         dispatch(toggleModal('addMovieModal', true));
     }, [movie.id, isShowOptions]);
 

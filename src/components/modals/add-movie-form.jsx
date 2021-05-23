@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useFormikContext, Formik, Form, Field} from 'formik';
 import DatePicker from "react-datepicker";
 import {toggleModal} from "@/store/actions";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 import {api} from '@/api';
 
 

@@ -1,6 +1,7 @@
 @import "../../variables"
 
 .moviePage
+  background-image: url('../../assets/img/header_bg.jpg')
   padding: 0 0 60px 0
   background-size: cover
   background-position: center
@@ -68,7 +69,12 @@
   padding-top: 20px
   .logo
     height: 40px
+    svg
+      height: 100%
+      width: auto;
   .search-button
-    color: $red
+    display: block
     width: 30px
     height: 30px
+    background: url('../../assets/img/search.svg') no-repeat center
+    background-size: cover

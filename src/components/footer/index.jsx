@@ -6,7 +6,7 @@ import './footer-style.sass';
 export const Footer = () => {
     return (
         <footer className="footer">
-            <Logo />
+            {/*<Logo />*/}
         </footer>
     )
 }

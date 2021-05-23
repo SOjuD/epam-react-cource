@@ -1,16 +1,14 @@
 import React from "react";
 import {Link} from "react-router-dom";
-import searchIcon from '@/assets/img/search.svg';
-import logo from '@/assets/img/logo.svg';
+import {Logo} from "../header/logo";
 
 export const MovieHeader = () => {
     return(
         <div className="movie_header container">
             <Link to={'/'}>
-                <img src={logo} alt="site name" className="logo"/>
+                <Logo/>
             </Link>
             <Link to={'/'} className="search-button">
-                <img src={searchIcon} alt="search"/>
             </Link>
         </div>
     )

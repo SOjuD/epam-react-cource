@@ -6,7 +6,7 @@ export const FindMovie = () => {
 
     const debounceSearch = useCallback(debounce(
         (value) => {
-            if(value) history.push(`search/${value}`)
+            if(value) history.replace(`/search/${value}`)
             else history.push('/')
         },
         500),

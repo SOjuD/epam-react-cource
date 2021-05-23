@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 
 import {Spinner} from '@/components/spinner';
 import {NotFound} from "@/components/body/not-found";

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 
 import './body-style.sass';
@@ -12,12 +12,14 @@ import {useMovies} from "@/hooks";
 
 export const Body = () => {
     const state = useSelector(state => state);
+    const [isNeedFetch, setIsNeedFetch] = useState(false);
     const {isLoaded, data: movies, sort, filter} = state.movieData;
     const {availableSort, availableFilter} = state;
     const getMovies = useMovies(sort, filter);
     const params = useParams();
     useEffect(() => {
-        getMovies(params, true);
+        isNeedFetch && getMovies(params, true);
+        setIsNeedFetch(true)
     }, [params]);
 
     return (

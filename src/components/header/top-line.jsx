@@ -5,7 +5,7 @@ import {AddMovieButton} from "@/components/header/add-movie-button";
 export const TopLine = () => {
     return (
         <div className="top-line">
-            <Logo />
+            <Logo/>
             <AddMovieButton />
         </div>
     )

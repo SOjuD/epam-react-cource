@@ -1,18 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import headerBgImage from "@/assets/img/header_bg.jpg";
 import "./movie-page-style.sass";
 import {api} from '@/api';
 import {Spinner} from "@/components/spinner";
 import {MovieContent} from "@/components/movie-page/movie-content";
 import {MovieHeader} from "@/components/movie-page/movie-header";
+import {useDispatch, useSelector} from "react-redux";
+import {setCurrentMovie} from "../../store/actions";
 
 export const MoviePage = () => {
     const {id} = useParams();
-    const [movie, setMovie] = useState(null);
+    const currentMovie = useSelector(state => state.currentMovie);
+    const dispatch = useDispatch();
     useEffect(() => {
-        api.getMovie(id).then(res => {
-            setMovie(res);
+        currentMovie.id || api.getMovie(id).then(res => {
+            dispatch(setCurrentMovie(res))
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
@@ -20,9 +22,9 @@ export const MoviePage = () => {
         })
     }, [id])
     return(
-        <header className="moviePage" style={{backgroundImage: `url(${headerBgImage})`}}>
+        <header className="moviePage">
             <MovieHeader/>
-            {!movie ? <Spinner/> : <MovieContent movie={movie}/>}
+            {!currentMovie.id ? <Spinner/> : <MovieContent movie={currentMovie}/>}
         </header>
     )
 }

@@ -1,17 +1,26 @@
+const path = require('path');
 const { merge } = require('webpack-merge');
-const {common, PATHS, filename, isProd} = require('./webpack.common');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const {common, isDev} = require('./webpack.common');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+const PATHS = {
+  src: path.join(__dirname, '../src'),
+  dist: path.join(__dirname, '../public'),
+  assets: 'assets/',
+}
 
 module.exports = merge(common, {
   name: "client",
   target: "web",
-  mode: process.env.NODE_ENV,
-  entry: {
-    app: PATHS.src,
-  },
+  entry: [
+    isDev && 'webpack-hot-middleware/client',
+    `${PATHS.src}/client.js`,
+  ].filter(Boolean),
   output: {
-    filename: filename('js'),
+    filename: 'js/[name].js',
     path: PATHS.dist,
     publicPath: "/"
   },
@@ -24,11 +33,35 @@ module.exports = merge(common, {
     }
   },
   plugins: [
-    new HTMLWebpackPlugin({
-      template: './src/index.html',
-      minify: {
-        collapseWhitespace: isProd
-      }
+    isDev && new webpack.HotModuleReplacementPlugin(),
+    new CleanWebpackPlugin(),
+    new CopyWebpackPlugin([
+      { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
+    ]),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].css'
     })
-  ]
+  ].filter(Boolean),
+  module: {
+    rules: [
+      {
+        test: /\.((c|sa|sc)ss)$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: isDev,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: isDev,
+            },
+          },
+        ],
+      }
+    ]
+  }
 })
