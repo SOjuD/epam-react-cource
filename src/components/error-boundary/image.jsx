@@ -8,7 +8,6 @@ export const Image = ({path, title}) => {
         setImagePath(path)
     }, [path, isBrowser])
     const changeToDefaultImage = () => {
-        console.log(defaultImage)
         setImagePath(defaultImage);
     }
     return(
